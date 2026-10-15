@@ -1,1 +1,44 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+	color-scheme: light;
+	font-family: 'Nunito Sans', 'Trebuchet MS', sans-serif;
+	color: #19332d;
+	background: #f3f8f2;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	--ink: #19332d;
+	--muted: #71817a;
+	--line: #dce7df;
+	--paper: #fffefa;
+	--red: #e74b43;
+	--red-dark: #c83a34;
+	--green: #1e5548;
+	--yellow: #f2c94c;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	min-width: 320px;
+	min-height: 100vh;
+	margin: 0;
+	background-color: #f3f8f2;
+	background-image: radial-gradient(#dce8dd 0.8px, transparent 0.8px);
+	background-size: 22px 22px;
+}
+
+button,
+input {
+	font: inherit;
+}
+
+::selection {
+	color: var(--ink);
+	background: #f7dfa0;
+}

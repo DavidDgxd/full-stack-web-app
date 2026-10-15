@@ -1,0 +1,174 @@
+:host {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	align-items: start;
+	gap: 24px;
+	color: var(--ink, #19332d);
+}
+
+section {
+	min-width: 0;
+	padding: clamp(24px, 4vw, 36px);
+	border: 1px solid #dce7df;
+	border-radius: 10px;
+	background: #fffefa;
+	box-shadow: 0 12px 32px rgb(25 51 45 / 5%);
+}
+
+section:first-child {
+	border-top: 4px solid #e74b43;
+}
+
+section:nth-child(2) {
+	border-top: 4px solid #1e5548;
+}
+
+h1,
+h2 {
+	margin: 0 0 24px;
+	color: #19332d;
+	letter-spacing: 0;
+	line-height: 1.15;
+}
+
+h1 {
+	font-size: clamp(1.65rem, 4vw, 2.15rem);
+	font-weight: 800;
+}
+
+h2 {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 1.25rem;
+	font-weight: 800;
+}
+
+h2::before {
+	width: 10px;
+	height: 10px;
+	border: 3px solid #e74b43;
+	border-radius: 50%;
+	content: '';
+}
+
+form {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 18px 16px;
+}
+
+form > div {
+	min-width: 0;
+}
+
+label {
+	display: block;
+	margin-bottom: 7px;
+	color: #4c6159;
+	font-size: 0.78rem;
+	font-weight: 800;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+input {
+	width: 100%;
+	min-height: 46px;
+	padding: 10px 12px;
+	border: 1px solid #dce7df;
+	border-radius: 6px;
+	outline: none;
+	background: #fbfdf9;
+	color: #19332d;
+	transition: border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
+}
+
+input:hover {
+	border-color: #aabdb1;
+}
+
+input:focus-visible {
+	border-color: #1e5548;
+	background: #fff;
+	box-shadow: 0 0 0 3px rgb(30 85 72 / 14%);
+}
+
+button[type='submit'] {
+	grid-column: 1 / -1;
+	min-height: 48px;
+	margin-top: 4px;
+	padding: 11px 18px;
+	border: 0;
+	border-radius: 6px;
+	background: #e74b43;
+	color: white;
+	cursor: pointer;
+	font-weight: 800;
+	transition: background 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+}
+
+button[type='submit']:hover:not(:disabled) {
+	transform: translateY(-1px);
+	background: #c83a34;
+	box-shadow: 0 5px 14px rgb(200 58 52 / 20%);
+}
+
+button[type='submit']:focus-visible {
+	outline: 3px solid #f2c94c;
+	outline-offset: 3px;
+}
+
+button[type='submit']:disabled {
+	background: #c8d2cc;
+	color: #62746b;
+	cursor: not-allowed;
+}
+
+.error {
+	margin: 6px 0 0;
+	color: #bd342f;
+	font-size: 0.82rem;
+	font-weight: 600;
+}
+
+ul {
+	display: grid;
+	gap: 10px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+li {
+	padding: 14px 15px;
+	border: 1px solid #e3ebe4;
+	border-radius: 6px;
+	background: #f8fbf6;
+	color: #52675e;
+	font-size: 0.9rem;
+	line-height: 1.6;
+}
+
+li strong {
+	color: #19332d;
+	font-size: 1rem;
+	font-weight: 800;
+}
+
+@media (max-width: 760px) {
+	:host {
+		gap: 16px;
+	}
+}
+
+@media (max-width: 440px) {
+	section {
+		padding: 22px 18px;
+	}
+
+	form {
+		grid-template-columns: 1fr;
+		gap: 14px;
+	}
+}

@@ -1,0 +1,56 @@
+<section>
+  <h1>Add a Pokémon</h1>
+
+  <form [formGroup]="pokemonForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="name">Name</label>
+      <input id="name" type="text" formControlName="name" placeholder="Enter Pokémon name (e.g., Pikachu)" />
+      @if (pokemonForm.controls.name.touched && pokemonForm.controls.name.hasError('required')) {
+        <p class="error" role="alert">Name is required.</p>
+      }
+    </div>
+
+    <div>
+      <label for="type">Type</label>
+      <input id="type" type="text" formControlName="type" placeholder="Enter Pokémon type (e.g., Electric)" />
+      @if (pokemonForm.controls.type.touched && pokemonForm.controls.type.hasError('required')) {
+        <p class="error" role="alert">Type is required.</p>
+      }
+    </div>
+
+    <div>
+      <label for="level">Level</label>
+      <input id="level" type="number" min="1" max="100" formControlName="level" />
+      @if (pokemonForm.controls.level.touched && pokemonForm.controls.level.invalid) {
+        <p class="error" role="alert">Level must be between 1 and 100.</p>
+      }
+    </div>
+
+    <div>
+      <label for="nature">Nature</label>
+      <input id="nature" type="text" formControlName="nature" placeholder="Enter Pokémon nature (e.g., Bold)" />
+      @if (pokemonForm.controls.nature.touched && pokemonForm.controls.nature.hasError('required')) {
+        <p class="error" role="alert">Nature is required.</p>
+      }
+    </div>
+
+    <button type="submit" [disabled]="pokemonForm.invalid">Save Pokémon</button>
+  </form>
+</section>
+
+<section>
+  <h2>Saved Pokémon</h2>
+
+  <ul>
+    @for (pokemon of pokemonService.pokemonList(); track pokemon._id) {
+      <li>
+        <strong>{{ pokemon.name }}</strong>
+        · Type: {{ pokemon.type }}
+        · Level: {{ pokemon.level }}
+        · Nature: {{ pokemon.nature }}
+      </li>
+    } @empty {
+      <li>No Pokémon saved yet.</li>
+    }
+  </ul>
+</section>
