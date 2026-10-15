@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy,Component,inject,signal,OnInit } from '@angular/core';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Pokemon} from '../pokemon';
+import {Pokemon, PokemonEntry} from '../pokemon';
 
 @Component({
   imports: [ ReactiveFormsModule],
@@ -13,6 +13,7 @@ export class PokemonForm implements OnInit {
   
   private formBuilder = inject(FormBuilder);
   pokemonService = inject(Pokemon);
+  editingPokemonId: string | null = null;
 
   pokemonForm = this.formBuilder.nonNullable.group({
     name: ['', Validators.required],
@@ -21,24 +22,47 @@ export class PokemonForm implements OnInit {
     nature: ['', Validators.required]
   });
 
-  ngOnInit(){
+  ngOnInit() {
     this.pokemonService.fetchPokemonList();
   }
 
-  onSubmit() {
+  onSubmit()  {
     if (this.pokemonForm.invalid) return;
 
     const data = this.pokemonForm.getRawValue();
+    const request = this.editingPokemonId
+      ? this.pokemonService.updatePokemon(this.editingPokemonId, data)
+      : this.pokemonService.savePokemon(data);
 
-    if(this.pokemonForm) {
-      this.pokemonService.savePokemon(data).subscribe({
+    request.subscribe({
       next: () => {
         this.pokemonService.fetchPokemonList();
-        this.pokemonForm.reset();
-        console.log('Pokemon saved successfully');
+        this.cancelEdit();
       }
-    })
-    
-  } 
-} 
+    });
+  }
+
+  editPokemon(pokemon: PokemonEntry) {
+    this.editingPokemonId = pokemon._id;
+    this.pokemonForm.setValue({
+      name: pokemon.name,
+      type: pokemon.type,
+      level: pokemon.level,
+      nature: pokemon.nature,
+    });
+  }
+
+  cancelEdit() {
+    this.editingPokemonId = null;
+    this.pokemonForm.reset();
+  }
+
+  deletePokemon(pokemon: PokemonEntry) {
+    this.pokemonService.deletePokemon(pokemon._id).subscribe({
+      next: () => {
+        if (this.editingPokemonId === pokemon._id) this.cancelEdit();
+        this.pokemonService.fetchPokemonList();
+      }
+    });
+  }
 }

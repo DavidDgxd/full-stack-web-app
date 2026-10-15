@@ -14,26 +14,52 @@ const pokemonSchema = new mongoose.Schema({
   nature: { type: String, required: true },
 });
 
-const Pokemon = mongoose.model('Pokemon', pokemonSchema);
+const Pokemon = mongoose.model('pokemon', pokemonSchema);
 
 app.post('/api/pokemon', async (req, res) => {
   try {
-    console.log('POST body:', req.body);
-    const pokemon = await Pokemon.create(req.body);
-    res.status(201).json(pokemon);
+    const pokemon = new Pokemon(req.body);
+    await pokemon.save();
+    console.log('Added new pokemon:', pokemon);
+    res.status(201).send(pokemon);
   } catch (err) {
     console.error('Save failed:', err.message);
-    res.status(400).json({ error: err.message });
+    res.status(400).send({ error: err.message });
   }
 });
 
 app.get('/api/pokemon', async (req, res) => {
   try {
     const list = await Pokemon.find();
-    res.json(list);
+    res.send(list);
   } catch (err) {
     console.error('Fetch failed:', err.message);
-    res.status(500).json({ error: err.message });
+    res.status(500).send({ error: err.message });
+  }
+});
+
+app.put('/api/pokemon/:id', async (req, res) => {
+  try {
+    const pokemon = await Pokemon.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!pokemon) return res.status(404).send({ error: 'Pokémon not found.' });
+    res.send(pokemon);
+  } catch (err) {
+    console.error('Update failed:', err.message);
+    res.status(400).send({ error: err.message });
+  }
+});
+
+app.delete('/api/pokemon/:id', async (req, res) => {
+  try {
+    const pokemon = await Pokemon.findByIdAndDelete(req.params.id);
+    if (!pokemon) return res.status(404).send({ error: 'Pokémon not found.' });
+    res.status(204).send();
+  } catch (err) {
+    console.error('Delete failed:', err.message);
+    res.status(400).send({ error: err.message });
   }
 });
 

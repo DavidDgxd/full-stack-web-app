@@ -108,6 +108,21 @@ button[type='submit'] {
 	transition: background 150ms ease, transform 150ms ease, box-shadow 150ms ease;
 }
 
+.cancel-button {
+	grid-column: 1 / -1;
+	min-height: 42px;
+	border: 1px solid #dce7df;
+	border-radius: 6px;
+	background: transparent;
+	color: #52675e;
+	cursor: pointer;
+	font-weight: 700;
+}
+
+.cancel-button:hover {
+	background: #f3f8f2;
+}
+
 button[type='submit']:hover:not(:disabled) {
 	transform: translateY(-1px);
 	background: #c83a34;
@@ -154,6 +169,37 @@ li strong {
 	color: #19332d;
 	font-size: 1rem;
 	font-weight: 800;
+}
+
+.pokemon-actions {
+	display: flex;
+	gap: 8px;
+	margin-top: 12px;
+}
+
+.pokemon-actions button {
+	min-height: 34px;
+	padding: 6px 12px;
+	border: 1px solid #dce7df;
+	border-radius: 5px;
+	background: #fffefa;
+	color: #1e5548;
+	cursor: pointer;
+	font-weight: 700;
+}
+
+.pokemon-actions button:hover {
+	border-color: #1e5548;
+	background: #f3f8f2;
+}
+
+.pokemon-actions button:last-child {
+	color: #bd342f;
+}
+
+.pokemon-actions button:last-child:hover {
+	border-color: #bd342f;
+	background: #fff6f4;
 }
 
 @media (max-width: 760px) {

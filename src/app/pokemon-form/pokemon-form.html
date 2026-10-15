@@ -1,5 +1,5 @@
 <section>
-  <h1>Add a Pokémon</h1>
+  <h1>{{ editingPokemonId ? 'Edit Pokémon' : 'Add a Pokémon' }}</h1>
 
   <form [formGroup]="pokemonForm" (ngSubmit)="onSubmit()">
     <div>
@@ -34,12 +34,17 @@
       }
     </div>
 
-    <button type="submit" [disabled]="pokemonForm.invalid">Save Pokémon</button>
+    @if (editingPokemonId) {
+      <button class="cancel-button" type="button" (click)="cancelEdit()">Cancel</button>
+    }
+    <button type="submit" [disabled]="pokemonForm.invalid">
+      {{ editingPokemonId ? 'Update Pokémon' : 'Save Pokémon' }}
+    </button>
   </form>
 </section>
 
 <section>
-  <h2>Saved Pokémon</h2>
+  <h2>Gary Oak's Winning Team</h2>
 
   <ul>
     @for (pokemon of pokemonService.pokemonList(); track pokemon._id) {
@@ -48,6 +53,10 @@
         · Type: {{ pokemon.type }}
         · Level: {{ pokemon.level }}
         · Nature: {{ pokemon.nature }}
+        <div class="pokemon-actions">
+          <button type="button" (click)="editPokemon(pokemon)" [attr.aria-label]="'Edit ' + pokemon.name">Edit</button>
+          <button type="button" (click)="deletePokemon(pokemon)" [attr.aria-label]="'Delete ' + pokemon.name">Delete</button>
+        </div>
       </li>
     } @empty {
       <li>No Pokémon saved yet.</li>
